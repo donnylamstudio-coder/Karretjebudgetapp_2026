@@ -1455,7 +1455,7 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
       {t.addBtn}
     </button>
   </div>
-{(viewMode==="month"?[...txListMonth].sort((a,b)=>new Date(b.date)-new Date(a.date)):allYearTx).map(tx=>( <TxRow key={tx.id} t={tx} fmt={fmt} cats={CATEGORIES} editingTx={editingTx} editTxDesc={editTxDesc} editTxAmount={editTxAmount} setEditTxDesc={setEditTxDesc} setEditTxAmount={setEditTxAmount} onEdit={startEditTx} onSave={saveEditTx} onDelete={deleteTx} txEditRef={txEditRef} BLACK={BLACK} RED={RED} GRAY={GRAY}/> ))}
+{(viewMode==="month"?[...txListMonth].sort((a,b)=>new Date(b.date)-new Date(a.date)):allYearTx).map(tx=>( <TxRow key={tx.id} t={tx} fmt={fmt} cats={CATEGORIES} editingTx={editingTx} editTxDesc={editTxDesc} editTxAmount={editTxAmount} setEditTxDesc={setEditTxDesc} setEditTxAmount={setEditTxAmount} onEdit={startEditTx} onSave={saveEditTx} onDelete={deleteTx} txEditRef={txEditRef} BLACK={BLACK} RED={RED} GRAY={GRAY} isDark={isDark}/> ))}
 {(viewMode==="month"?txListMonth:allYearTx).length===0 && ( <p style={{fontSize:13,color:GRAY,padding:"10px 0"}}>{t.transactions.noTransactions}</p> )}
 </div>
 </div> )}
@@ -1964,7 +1964,7 @@ function SwipeCard({ onSwipeLeft, children, style = {} }) {
   );
 }
 
-function TxRow({ t, fmt, cats, editingTx, editTxDesc, editTxAmount, setEditTxDesc, setEditTxAmount, onEdit, onSave, onDelete, txEditRef }) {
+function TxRow({ t, fmt, cats, editingTx, editTxDesc, editTxAmount, setEditTxDesc, setEditTxAmount, onEdit, onSave, onDelete, txEditRef, BLACK, RED, GRAY, isDark }) {
   const cat = cats.find(c => c.name === t.category) || cats[cats.length - 1];
   const isEd = editingTx === t.id;
 
