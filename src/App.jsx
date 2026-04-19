@@ -1090,7 +1090,7 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-thumb{background:#DDD;border-radius:2px;} `}
 </style>
-<div style={{flexShrink:0}}>
+<div style={{flexShrink:0,display:showNumpad?"none":"block"}}>
 <div style={{background:"#BCC3DD",padding:"10px 16px 16px",borderRadius:"0 0 28px 28px"}}>
 <div style={{textAlign:"center",marginBottom:6}}>
   <p style={{fontFamily:"DM Sans",fontSize:20,fontWeight:800,color:BLACK,letterSpacing:"-0.5px",lineHeight:1}}>karretje</p>
@@ -1495,9 +1495,9 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 </div> ); }} /> ); })()}
 
 {showNumpad && numpadCat && (
-  <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:isDark?"rgba(0,0,0,0.6)":"rgba(45,47,94,0.5)",backdropFilter:"blur(8px)",WebkitBackdropFilter:"blur(8px)",display:"flex",alignItems:"flex-end",justifyContent:"center",zIndex:9999}}
+  <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:isDark?"rgba(0,0,0,0.6)":"rgba(45,47,94,0.5)",backdropFilter:"blur(8px)",WebkitBackdropFilter:"blur(8px)",display:"flex",alignItems:"flex-end",justifyContent:"center",zIndex:99999}}
     onClick={()=>setShowNumpad(false)}>
-    <div style={{background:theme.WHITE,borderRadius:"28px 28px 0 0",padding:"20px 24px max(28px,env(safe-area-inset-bottom))",width:"100%",maxWidth:480,maxHeight:"90dvh",overflowY:"auto",border:`1px solid ${theme.CARD_BORDER}`,boxShadow:"0 -10px 40px rgba(0,0,0,0.2)"}}
+    <div style={{background:theme.WHITE,borderRadius:"28px 28px 0 0",padding:"20px 24px max(28px,env(safe-area-inset-bottom))",width:"100%",maxWidth:480,maxHeight:"90dvh",overflowY:"auto",border:`1px solid ${theme.CARD_BORDER}`,boxShadow:"0 -10px 40px rgba(0,0,0,0.25)"}}
       onClick={e=>e.stopPropagation()}>
 
       {/* Header */}
@@ -1512,43 +1512,41 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
         <button onClick={()=>setShowNumpad(false)} style={{background:isDark?"rgba(255,255,255,0.12)":"rgba(0,0,0,0.08)",border:"none",borderRadius:"50%",width:32,height:32,cursor:"pointer",fontSize:18,color:BLACK,display:"flex",alignItems:"center",justifyContent:"center"}}>×</button>
       </div>
 
-      {/* Display - big amount */}
-      <div style={{background:isDark?"rgba(255,255,255,0.08)":"rgba(45,47,94,0.08)",borderRadius:20,padding:"22px 20px",textAlign:"center",marginBottom:22}}>
-        <p style={{fontSize:11,color:GRAY,marginBottom:6,textTransform:"uppercase",letterSpacing:".06em"}}>{lang==="nl"?"Bedrag":"Amount"}</p>
-        <p style={{fontSize:48,fontWeight:800,color:BLACK,letterSpacing:"-2px",lineHeight:1}}>
-          €{(parseInt(numpadVal)||0).toLocaleString("nl-NL")}
-        </p>
-        {numpadCat.spent>0 && <p style={{fontSize:11,color:GRAY,marginTop:8}}>{lang==="nl"?"Uitgegeven":"Spent"}: {fmt(numpadCat.spent)}</p>}
-      </div>
-
-      {/* Slider */}
-      <div style={{marginBottom:16}}>
-        <input
-          type="range"
-          min="0"
-          max="2000"
-          step="5"
-          value={parseInt(numpadVal)||0}
-          onChange={e=>{haptic.select();setNumpadVal(e.target.value);}}
-          style={{
-            width:"100%",
-            height:8,
-            borderRadius:50,
-            appearance:"none",
-            WebkitAppearance:"none",
-            background:`linear-gradient(to right, ${BLACK} 0%, ${BLACK} ${Math.min(100,((parseInt(numpadVal)||0)/2000)*100)}%, ${isDark?"rgba(255,255,255,0.12)":"rgba(0,0,0,0.08)"} ${Math.min(100,((parseInt(numpadVal)||0)/2000)*100)}%, ${isDark?"rgba(255,255,255,0.12)":"rgba(0,0,0,0.08)"} 100%)`,
-            outline:"none",
-            cursor:"pointer",
-          }}
-        />
-        <style>{`input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:28px;height:28px;border-radius:50%;background:${theme.WHITE};border:3px solid ${BLACK};cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.15);}input[type="range"]::-moz-range-thumb{width:28px;height:28px;border-radius:50%;background:${theme.WHITE};border:3px solid ${BLACK};cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.15);}`}</style>
-        <div style={{display:"flex",justifyContent:"space-between",marginTop:8,fontSize:11,color:GRAY,fontWeight:600}}>
-          <span>€0</span>
-          <span>€500</span>
-          <span>€1000</span>
-          <span>€1500</span>
-          <span>€2000</span>
+      {/* Big amount input */}
+      <div style={{background:isDark?"rgba(255,255,255,0.08)":"rgba(45,47,94,0.08)",borderRadius:20,padding:"22px 20px",textAlign:"center",marginBottom:18}}>
+        <p style={{fontSize:11,color:GRAY,marginBottom:10,textTransform:"uppercase",letterSpacing:".06em"}}>{lang==="nl"?"Bedrag":"Amount"}</p>
+        <div style={{display:"flex",alignItems:"baseline",justifyContent:"center",gap:4}}>
+          <span style={{fontSize:36,fontWeight:800,color:BLACK,letterSpacing:"-1.5px"}}>€</span>
+          <input
+            type="text"
+            inputMode="numeric"
+            pattern="[0-9]*"
+            autoFocus
+            value={numpadVal==="0"?"":numpadVal}
+            placeholder="0"
+            onChange={e=>{
+              const v = e.target.value.replace(/[^0-9]/g,"");
+              setNumpadVal(v===""?"0":v.replace(/^0+/,"")||"0");
+            }}
+            style={{
+              background:"transparent",
+              border:"none",
+              outline:"none",
+              fontFamily:"inherit",
+              fontSize:48,
+              fontWeight:800,
+              color:BLACK,
+              letterSpacing:"-2px",
+              lineHeight:1,
+              width:"auto",
+              minWidth:60,
+              maxWidth:"70%",
+              textAlign:"center",
+              padding:0,
+            }}
+          />
         </div>
+        {numpadCat.spent>0 && <p style={{fontSize:11,color:GRAY,marginTop:10}}>{lang==="nl"?"Uitgegeven":"Spent"}: {fmt(numpadCat.spent)}</p>}
       </div>
 
       {/* Quick amounts */}
@@ -1559,26 +1557,6 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
             €{v}
           </button>
         ))}
-      </div>
-
-      {/* Fine-tune buttons */}
-      <div style={{display:"flex",gap:8,marginBottom:22}}>
-        <button onClick={()=>{haptic.select();setNumpadVal(v=>String(Math.max(0,(parseInt(v)||0)-10)));}}
-          style={{flex:1,padding:"12px 0",background:isDark?"rgba(255,255,255,0.06)":"rgba(0,0,0,0.05)",border:"none",borderRadius:50,fontFamily:"inherit",fontSize:14,fontWeight:700,color:BLACK,cursor:"pointer"}}>
-          −10
-        </button>
-        <button onClick={()=>{haptic.select();setNumpadVal(v=>String(Math.max(0,(parseInt(v)||0)-50)));}}
-          style={{flex:1,padding:"12px 0",background:isDark?"rgba(255,255,255,0.06)":"rgba(0,0,0,0.05)",border:"none",borderRadius:50,fontFamily:"inherit",fontSize:14,fontWeight:700,color:BLACK,cursor:"pointer"}}>
-          −50
-        </button>
-        <button onClick={()=>{haptic.select();setNumpadVal(v=>String((parseInt(v)||0)+50));}}
-          style={{flex:1,padding:"12px 0",background:isDark?"rgba(255,255,255,0.06)":"rgba(0,0,0,0.05)",border:"none",borderRadius:50,fontFamily:"inherit",fontSize:14,fontWeight:700,color:BLACK,cursor:"pointer"}}>
-          +50
-        </button>
-        <button onClick={()=>{haptic.select();setNumpadVal(v=>String((parseInt(v)||0)+10));}}
-          style={{flex:1,padding:"12px 0",background:isDark?"rgba(255,255,255,0.06)":"rgba(0,0,0,0.05)",border:"none",borderRadius:50,fontFamily:"inherit",fontSize:14,fontWeight:700,color:BLACK,cursor:"pointer"}}>
-          +10
-        </button>
       </div>
 
       {/* Save button */}
