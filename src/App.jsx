@@ -6,7 +6,9 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, BarChart, Bar, XAxis
 let Preferences = null;
 try {
   if (window?.Capacitor?.isNativePlatform?.()) {
-    import("@capacitor/preferences").then(m => { Preferences = m?.Preferences ?? null; }).catch(()=>{});
+    // Split string so Vite/Rollup doesn't try to resolve this at build time
+    const modName = "@capacitor/" + "preferences";
+    import(/* @vite-ignore */ modName).then(m => { Preferences = m?.Preferences ?? null; }).catch(()=>{});
   }
 } catch(e) {}
 const store = {
@@ -40,7 +42,9 @@ let Haptics = null;
 try {
   const cap = window?.Capacitor;
   if (cap?.isNativePlatform?.()) {
-    import("@capacitor/haptics").then(m => { Haptics = m?.Haptics ?? null; }).catch(()=>{});
+    // Split string so Vite/Rollup doesn't try to resolve this at build time
+    const modName = "@capacitor/" + "haptics";
+    import(/* @vite-ignore */ modName).then(m => { Haptics = m?.Haptics ?? null; }).catch(()=>{});
   }
 } catch(e) {}
 const haptic = {
