@@ -1053,10 +1053,10 @@ html,body{height:100%;overflow:hidden;}
 .card{background:${theme.CARD_BG};backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:20px;padding:16px;box-shadow:0 4px 20px ${isDark?'rgba(0,0,0,0.3)':'rgba(45,47,94,0.1)'};border:1px solid ${theme.CARD_BORDER};transition:background 0.3s, border-color 0.3s;}
 .pill{border:none;border-radius:50px;padding:10px 22px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .18s;}
 .pill-dark{background:${BLACK};color:${WHITE};}
-.pill-dark:hover{background:#333;}
-.pill-yellow{background:#BCC3DD;color:#1A1A1A;}
-.pill-yellow:hover{background:#A8B0CF;}
-.pill-outline{background:transparent;color:${BLACK};border:1.5px solid #DDD;}
+.pill-dark:hover{background:${isDark?"#DDE0F0":"#333"};}
+.pill-yellow{background:${isDark?"#3A3D6B":"#BCC3DD"};color:${BLACK};}
+.pill-yellow:hover{background:${isDark?"#4A4D7B":"#A8B0CF"};}
+.pill-outline{background:transparent;color:${BLACK};border:1.5px solid ${isDark?"rgba(255,255,255,0.2)":"#DDD"};}
 .pill-outline:hover{border-color:${YELLOW};}
 .pill-sm{padding:6px 14px;font-size:11px;}
 .tab-btn{background:none;border:none;font-family:inherit;font-size:10px;font-weight:600;color:#AAA;cursor:pointer;padding:6px 10px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em;transition:all .18s;}
@@ -1066,10 +1066,10 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.38);display:flex;align-items:flex-end;justify-content:center;z-index:200;}
 .sheet{background:${theme.WHITE};border-radius:28px 28px 0 0;padding:28px 24px max(36px, calc(20px + env(safe-area-inset-bottom)));width:100%;max-width:500px;max-height:90dvh;overflow-y:auto;}
 .tx-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid ${theme.DIVIDER};}
-.tx-row:last-child{border-bottom:none;} /* cat-dot handled by CatDot component */ .track{height:10px;background:#F0F0F0;border-radius:3px;overflow:hidden;margin-top:8px;}
+.tx-row:last-child{border-bottom:none;} /* cat-dot handled by CatDot component */ .track{height:10px;background:${isDark?"rgba(255,255,255,0.1)":"#F0F0F0"};border-radius:3px;overflow:hidden;margin-top:8px;}
 .fill{height:100%;border-radius:3px;transition:width .4s;}
 .icon-btn{background:none;border:none;cursor:pointer;padding:4px 7px;border-radius:8px;font-size:13px;color:${GRAY};transition:all .15s;}
-.icon-btn:hover{background:#F0F0F0;}
+.icon-btn:hover{background:${isDark?"rgba(255,255,255,0.1)":"#F0F0F0"};}
 .inline-input{background:${YELLOW}22;border:2px solid ${YELLOW};color:${BLACK};border-radius:10px;padding:5px 10px;font-family:inherit;font-size:14px;font-weight:700;width:100px;outline:none;text-align:right;}
 .save-btn{background:${BLACK};color:${WHITE};border:none;border-radius:8px;padding:6px 12px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;margin-left:6px;flex-shrink:0;}
 .nav-arrow{background:${isDark?"rgba(255,255,255,0.12)":"rgba(92,102,144,0.2)"};border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:${BLACK};flex-shrink:0;transition:background .15s;}
@@ -1289,7 +1289,7 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 </> ) : ( <> <div className="card"> <p style={{fontFamily:"DM Sans",fontSize:17,fontWeight:700,marginBottom:2}}>{t.home.yearOverview}
 {year}</p>
 <p style={{fontSize:11,color:GRAY,marginBottom:14}}>{t.home.incomeVsExpenses}</p>
-<ResponsiveContainer width="100%" height={180}> <LineChart data={yearMonthData}> <CartesianGrid strokeDasharray="3 3" stroke="#F0F0F0"/>
+<ResponsiveContainer width="100%" height={180}> <LineChart data={yearMonthData}> <CartesianGrid strokeDasharray="3 3" stroke={isDark?"rgba(255,255,255,0.08)":"#F0F0F0"}/>
 <XAxis dataKey="name" tick={{fill:"#AAA",fontSize:10}} axisLine={false} tickLine={false}/>
 <YAxis tick={{fill:"#CCC",fontSize:9}} axisLine={false} tickLine={false} width={36} tickFormatter={v=>`€${v/1000}k`}/>
 <Tooltip contentStyle={{fontFamily:"DM Sans",fontSize:11,borderRadius:10,border:"none",boxShadow:"0 4px 14px rgba(0,0,0,.1)"}} formatter={v=>fmt(v)}/>
@@ -1321,7 +1321,7 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
       </div>
     ))}
   </div>
-  <div style={{marginTop:12,paddingTop:12,borderTop:"1px solid #F0F0F0",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+  <div style={{marginTop:12,paddingTop:12,borderTop:`1px solid ${theme.DIVIDER}`,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
     <span style={{fontSize:12,color:GRAY,fontWeight:600}}>{lang==="nl"?"Totaal gespaard dit jaar":"Total saved this year"}</span>
     <span style={{fontSize:16,fontWeight:800,color:(yearIncome-yearExpenses)>=0?GREEN:RED}}>
       {(yearIncome-yearExpenses)>=0?"+":""}{fmt(yearIncome-yearExpenses)}
@@ -1342,10 +1342,10 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 {tab==="inkomsten" && ( <div style={{display:"flex",flexDirection:"column",gap:14}}> <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}> <p style={{fontFamily:"DM Sans",fontSize:22,fontWeight:700}}>{t.income.title}</p>
 {viewMode==="month" && <button className="pill pill-yellow pill-sm" onClick={()=>setShowIncomeModal(true)}>{t.income.addBtn}</button>}
 </div>
-<div className="card" style={{background:BLACK,color:WHITE,padding:"18px 22px"}}> <p style={{fontSize:11,color:"rgba(255,255,255,.65)",textTransform:"uppercase",letterSpacing:".06em",marginBottom:6}}>
+<div className="card" style={{background:isDark?"#3A3D6B":"#2D2F5E",color:"#FFFFFF",padding:"18px 22px"}}> <p style={{fontSize:11,color:"rgba(255,255,255,.65)",textTransform:"uppercase",letterSpacing:".06em",marginBottom:6}}>
 {viewMode==="month" ? `${t.income.totalMonth} ${t.months[month]}` : `${t.income.yearIncome} ${year}`}
 </p>
-<p style={{fontFamily:"DM Sans",fontSize:30,fontWeight:700,color:YELLOW}}>{fmt(curIncome)}</p>
+<p style={{fontFamily:"DM Sans",fontSize:30,fontWeight:700,color:isDark?"#9DA8DD":YELLOW}}>{fmt(curIncome)}</p>
 {viewMode==="year" && <p style={{fontSize:11,color:"rgba(255,255,255,.3)",marginTop:4}}>{t.income.avgPerMonth}
 {fmt(Math.round(yearIncome/12))}/{t.income.perMonth}</p>}
 </div>
@@ -1356,7 +1356,7 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 <div style={{textAlign:"right"}}> <p style={{fontSize:18,fontWeight:700,color:GREEN}}>{fmt(fixedIncomeTotal)}</p>
 <p style={{fontSize:10,color:GRAY}}>{lang==="nl"?"per maand":"per month"}</p>
 </div> </div>
-<div style={{height:1,background:"#F0F0F0",margin:"12px 0"}}/>
+<div style={{height:1,background:(isDark?"rgba(255,255,255,0.08)":"#F0F0F0"),margin:"12px 0"}}/>
 {fixedIncome.length===0 && <p style={{fontSize:13,color:GRAY,padding:"4px 0 8px"}}>{t.income.fixedNone}</p>}
 {fixedIncome.map(item=>{ const isEd=editingFixed===item.id; return ( <div key={item.id} className="income-row"> <div style={{width:38,height:38,borderRadius:12,background:YELLOW+"33",display:"flex",alignItems:"center",justifyContent:"center",color:YELLOW,flexShrink:0}}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
 <div style={{flex:1}}> <div style={{display:"flex",alignItems:"center",gap:6}}> <p style={{fontSize:14,fontWeight:600}}>{item.source}</p>
@@ -1364,7 +1364,7 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 </div>
 <p style={{fontSize:11,color:GRAY}}>{lang==="nl"?"Alle maanden":"Every month"}</p>
 </div>
-{isEd ? ( <div style={{display:"flex",flexDirection:"column",gap:6,alignItems:"flex-end",minWidth:140}}> <input style={{background:"#F7F7F7",border:"1.5px solid "+YELLOW,borderRadius:8,padding:"5px 10px",fontFamily:"inherit",fontSize:13,fontWeight:600,width:"100%",outline:"none"}} type="text" value={editFixedName} onChange={e=>setEditFixedName(e.target.value)} placeholder={lang==="nl"?"Naam…":"Name…"}/>
+{isEd ? ( <div style={{display:"flex",flexDirection:"column",gap:6,alignItems:"flex-end",minWidth:140}}> <input style={{background:(isDark?"rgba(255,255,255,0.08)":"#F7F7F7"),border:"1.5px solid "+YELLOW,borderRadius:8,padding:"5px 10px",fontFamily:"inherit",fontSize:13,fontWeight:600,width:"100%",outline:"none"}} type="text" value={editFixedName} onChange={e=>setEditFixedName(e.target.value)} placeholder={lang==="nl"?"Naam…":"Name…"}/>
 <div style={{display:"flex",alignItems:"center",gap:4,width:"100%"}}> <span style={{fontSize:12,color:GRAY}}>€</span>
 <input ref={fixedRef} className="inline-input" style={{flex:1}} type="number" value={editFixedVal} onChange={e=>setEditFixedVal(e.target.value)} onKeyDown={e=>{if(e.key==="Enter")saveEditFixed(item.id);if(e.key==="Escape")setEditingFixed(null);}}/>
 <button className="save-btn" onClick={()=>saveEditFixed(item.id)}>✓</button>
@@ -1384,7 +1384,7 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 <p style={{fontSize:11,color:GRAY}}>{t.months[month]}
 {year}</p>
 </div>
-{isEd ? ( <div style={{display:"flex",flexDirection:"column",gap:6,alignItems:"flex-end",minWidth:140}}> <input ref={editRef} style={{background:"#F7F7F7",border:`1.5px solid ${YELLOW}`,borderRadius:8,padding:"5px 10px",fontFamily:"inherit",fontSize:13,fontWeight:600,width:"100%",outline:"none"}} type="text" value={editIncomeName} onChange={e=>setEditIncomeName(e.target.value)} placeholder={lang==="nl"?"Omschrijving…":"Description…"}/>
+{isEd ? ( <div style={{display:"flex",flexDirection:"column",gap:6,alignItems:"flex-end",minWidth:140}}> <input ref={editRef} style={{background:(isDark?"rgba(255,255,255,0.08)":"#F7F7F7"),border:`1.5px solid ${YELLOW}`,borderRadius:8,padding:"5px 10px",fontFamily:"inherit",fontSize:13,fontWeight:600,width:"100%",outline:"none"}} type="text" value={editIncomeName} onChange={e=>setEditIncomeName(e.target.value)} placeholder={lang==="nl"?"Omschrijving…":"Description…"}/>
 <div style={{display:"flex",alignItems:"center",gap:4,width:"100%"}}> <span style={{fontSize:12,color:GRAY}}>€</span>
 <input className="inline-input" style={{flex:1}} type="number" value={editVal} onChange={e=>setEditVal(e.target.value)} onKeyDown={e=>{if(e.key==="Enter")saveEditIncome(item.id);if(e.key==="Escape")setEditingIncome(null);}}/>
 <button className="save-btn" onClick={()=>saveEditIncome(item.id)}>✓</button>
@@ -1404,13 +1404,22 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 </div> )}
 </div> )}
 {tab==="transacties" && ( <div style={{display:"flex",flexDirection:"column",gap:14}}>
+<div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}> <p style={{fontFamily:"DM Sans",fontSize:22,fontWeight:700}}>{t.transactions.title||t.nav.transacties}</p>
+{viewMode==="month" && <button className="pill pill-yellow pill-sm" onClick={()=>{setTxModalMode("expense");setTxForm(f=>({...f,type:"expense"}));setShowTxModal(true);}}>{t.addBtn}</button>}
+</div>
+<div className="card" style={{background:isDark?"#3A3D6B":"#2D2F5E",color:"#FFFFFF",padding:"18px 22px"}}> <p style={{fontSize:11,color:"rgba(255,255,255,.65)",textTransform:"uppercase",letterSpacing:".06em",marginBottom:6}}>
+{viewMode==="month" ? `${lang==="nl"?"Totaal uitgaven":"Total expenses"} ${t.months[month]}` : `${lang==="nl"?"Totaal uitgaven":"Total expenses"} ${year}`}
+</p>
+<p style={{fontFamily:"DM Sans",fontSize:30,fontWeight:700,color:"#FF8A65"}}>{fmt(curExpenses)}</p>
+{viewMode==="year" && <p style={{fontSize:11,color:"rgba(255,255,255,.3)",marginTop:4}}>{lang==="nl"?"Gem.":"Avg."} {fmt(Math.round(yearExpenses/12))}/{lang==="nl"?"maand":"month"}</p>}
+</div>
 <div className="card" style={{border:`2px solid #FF8A65`}}> <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}> <div> <p style={{fontFamily:"DM Sans",fontSize:16,fontWeight:700}}>{t.transactions.fixedTitle}</p>
 <p style={{fontSize:11,color:GRAY,marginTop:1}}>{t.transactions.fixedSub}</p>
 </div>
 <div style={{textAlign:"right"}}> <p style={{fontSize:18,fontWeight:700,color:RED}}>{fmt(fixedExpTotal)}</p>
 <p style={{fontSize:10,color:GRAY}}>{lang==="nl"?"per maand":"per month"}</p>
 </div> </div>
-<div style={{height:1,background:"#F0F0F0",margin:"12px 0"}}/>
+<div style={{height:1,background:(isDark?"rgba(255,255,255,0.08)":"#F0F0F0"),margin:"12px 0"}}/>
 {fixedExpenses.length===0 && <p style={{fontSize:13,color:GRAY,padding:"4px 0 8px"}}>{t.transactions.fixedNone}</p>}
 {fixedExpenses.map(item=>{ const cat=CATEGORIES.find(c=>c.name===item.category)||CATEGORIES[6]; const isEd=editingFixedExp===item.id; return ( <div key={item.id} className="income-row"> <CatDot cat={cat} size={38}/>
 <div style={{flex:1}}> <div style={{display:"flex",alignItems:"center",gap:6}}> <p style={{fontSize:14,fontWeight:600}}>{item.desc}</p>
@@ -1426,7 +1435,7 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 <button className="icon-btn" onClick={()=>deleteFixedExp(item.id)} style={{color:RED}}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></button>
 </div> )}
 </div> ); })}
-<button className="pill pill-dark" style={{width:"100%",marginTop:12,fontSize:12,padding:"10px"}} onClick={()=>setShowFixedExpModal(true)}>{t.transactions.fixedAdd}</button>
+<button className="pill pill-yellow" style={{width:"100%",marginTop:12,fontSize:12,padding:"10px"}} onClick={()=>setShowFixedExpModal(true)}>{t.transactions.fixedAdd}</button>
 </div>
 <div className="card" style={{border:"2px solid rgba(45,47,94,0.12)"}}>
   <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
@@ -1439,7 +1448,7 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
       <p style={{fontSize:10,color:GRAY}}>{viewMode==="month"?(lang==="nl"?"deze maand":"this month"):(lang==="nl"?"dit jaar":"this year")}</p>
     </div>
   </div>
-  <div style={{height:1,background:"#F0F0F0",margin:"10px 0 14px"}}/>
+  <div style={{height:1,background:(isDark?"rgba(255,255,255,0.08)":"#F0F0F0"),margin:"10px 0 14px"}}/>
   <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
     <p style={{fontFamily:"DM Sans",fontSize:16,fontWeight:600}}>{viewMode==="month" ? `${t.months[month]} ${year}` : `${t.transactions.fullYear} ${year}`}</p>
     <button className="pill pill-yellow pill-sm" onClick={()=>{setTxModalMode("expense");setTxForm(f=>({...f,type:"expense"}));setShowTxModal(true);}}>
@@ -1453,12 +1462,12 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 {tab==="budget" && ( <div style={{display:"flex",flexDirection:"column",gap:12}}> <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end"}}> <p style={{fontFamily:"DM Sans",fontSize:22,fontWeight:700}}>{t.budget.title}</p>
 <p style={{fontSize:11,color:GRAY}}>{fmt(viewMode==="month"?totalBudgetWithFixed:(() => { let s=0; for(let m=0;m<12;m++) s+=Object.values(getMonthBudgets(year,m)).reduce((a,v)=>a+(typeof v==="number"?v:0),0); return s; })()+fixedExpTotal*12)}{viewMode==="month"?t.budget.perMonth:t.budget.perYear}</p>
 </div>
-<div className="card" style={{background:BLACK,color:WHITE,padding:"16px 20px"}}> <p style={{fontSize:11,color:"rgba(255,255,255,.65)",textTransform:"uppercase",letterSpacing:".06em",marginBottom:4}}>{t.budget.spentVsBudget}</p>
-<div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}> <p style={{fontFamily:"DM Sans",fontSize:24,fontWeight:700,color:curExpenses>(viewMode==="month"?totalBudgetWithFixed:totalBudgetWithFixed*12)?"#FF6B6B":YELLOW}}>
+<div className="card" style={{background:isDark?"#3A3D6B":"#2D2F5E",color:"#FFFFFF",padding:"16px 20px"}}> <p style={{fontSize:11,color:"rgba(255,255,255,.65)",textTransform:"uppercase",letterSpacing:".06em",marginBottom:4}}>{t.budget.spentVsBudget}</p>
+<div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}> <p style={{fontFamily:"DM Sans",fontSize:24,fontWeight:700,color:curExpenses>(viewMode==="month"?totalBudgetWithFixed:totalBudgetWithFixed*12)?"#FF6B6B":"#9DA8DD"}}>
 {fmt(curExpenses)}
 <span style={{fontSize:13,color:"rgba(255,255,255,.65)",fontFamily:"DM Sans"}}>/ {fmt(viewMode==="month"?totalBudgetWithFixed:(() => { let s=0; for(let m=0;m<12;m++) s+=Object.values(getMonthBudgets(year,m)).reduce((a,v)=>a+(typeof v==="number"?v:0),0); return s; })()+fixedExpTotal*12)}</span>
 </p>
-<div style={{width:50,height:50,borderRadius:"50%",border:`3px solid ${YELLOW}`,display:"flex",alignItems:"center",justifyContent:"center"}}> <span style={{fontSize:11,fontWeight:700,color:YELLOW}}>{Math.round((curExpenses/((viewMode==="month"?totalBudget:totalBudget*12)||1))*100)}%</span>
+<div style={{width:50,height:50,borderRadius:"50%",border:`3px solid #9DA8DD`,display:"flex",alignItems:"center",justifyContent:"center"}}> <span style={{fontSize:11,fontWeight:700,color:"#9DA8DD"}}>{Math.round((curExpenses/((viewMode==="month"?totalBudget:totalBudget*12)||1))*100)}%</span>
 </div> </div>
 </div>
 {(()=>{ const catList = viewMode==="month"?byCategoryMonth:yearByCategory;
@@ -1605,9 +1614,9 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 </button> ); })}
 </div>
 {showTxModal && ( <div className="overlay" onClick={e=>e.target===e.currentTarget&&setShowTxModal(false)}> <div className="sheet"> <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}> <p style={{fontFamily:"DM Sans",fontSize:20,fontWeight:700}}>{t.txModal.title}</p>
-<button onClick={()=>setShowTxModal(false)} style={{background:"#F0F0F0",border:"none",borderRadius:"50%",width:32,height:32,cursor:"pointer",fontSize:16}}>×</button>
+<button onClick={()=>setShowTxModal(false)} style={{background:(isDark?"rgba(255,255,255,0.08)":"#F0F0F0"),border:"none",borderRadius:"50%",width:32,height:32,cursor:"pointer",fontSize:16}}>×</button>
 </div>
-{txModalMode==="both" && ( <div style={{display:"flex",background:"#F3F3F3",borderRadius:14,padding:4,marginBottom:18}}>
+{txModalMode==="both" && ( <div style={{display:"flex",background:(isDark?"rgba(255,255,255,0.1)":(isDark?"rgba(255,255,255,0.1)":"#F3F3F3")),borderRadius:14,padding:4,marginBottom:18}}>
 {["expense","income"].map(type=>( <button key={type} onClick={()=>setTxForm(f=>({...f,type}))} style={{flex:1,padding:"9px 0",border:"none",borderRadius:11,fontFamily:"inherit",fontSize:13,fontWeight:600,cursor:"pointer", background:txForm.type===type?(type==="expense"?BLACK:YELLOW):"transparent", color:txForm.type===type?(type==="expense"?WHITE:BLACK):GRAY,transition:"all .18s"}}>
 {type==="expense"?t.txModal.expense:t.txModal.income}
 </button> ))}
@@ -1616,7 +1625,7 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 <input type="text" placeholder={t.txModal.descPh} value={txForm.desc} onChange={e=>setTxForm(p=>({...p,desc:e.target.value}))}/>
 {txForm.type==="expense" && ( <div style={{marginTop:10}}> <p style={{fontSize:10,fontWeight:600,color:GRAY,textTransform:"uppercase",letterSpacing:".07em",marginBottom:7}}>{t.txModal.quickLabel}</p>
 <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-{t.quickPicks.map(q=>( <button key={q.label} onClick={()=>{haptic.select();setTxForm(p=>({...p, desc:q.label, category:q.cat}));}} style={{ background: txForm.desc===q.label ? BLACK : "#F3F3F3", color: txForm.desc===q.label ? WHITE : BLACK, border:"none", borderRadius:50, padding:"6px 12px", fontSize:12, fontFamily:"inherit", cursor:"pointer", display:"flex", alignItems:"center", gap:5, transition:"all .15s", fontWeight:500, }}> <span>{q.icon}</span>{q.label}
+{t.quickPicks.map(q=>( <button key={q.label} onClick={()=>{haptic.select();setTxForm(p=>({...p, desc:q.label, category:q.cat}));}} style={{ background: txForm.desc===q.label ? BLACK : (isDark?"rgba(255,255,255,0.1)":(isDark?"rgba(255,255,255,0.1)":"#F3F3F3")), color: txForm.desc===q.label ? WHITE : BLACK, border:"none", borderRadius:50, padding:"6px 12px", fontSize:12, fontFamily:"inherit", cursor:"pointer", display:"flex", alignItems:"center", gap:5, transition:"all .15s", fontWeight:500, }}> <span>{q.icon}</span>{q.label}
 </button> ))}
 </div>
 </div> )}
@@ -1633,7 +1642,7 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 <button className="pill pill-yellow" style={{width:"100%",padding:"14px",fontSize:14}} onClick={addTx}>{t.txModal.addBtn}</button>
 </div> </div> )}
 {showIncomeModal && ( <div className="overlay" onClick={e=>e.target===e.currentTarget&&setShowIncomeModal(false)}> <div className="sheet"> <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}> <p style={{fontFamily:"DM Sans",fontSize:20,fontWeight:700}}>{t.incomeModal.title}</p>
-<button onClick={()=>setShowIncomeModal(false)} style={{background:"#F0F0F0",border:"none",borderRadius:"50%",width:32,height:32,cursor:"pointer",fontSize:16}}>×</button>
+<button onClick={()=>setShowIncomeModal(false)} style={{background:(isDark?"rgba(255,255,255,0.08)":"#F0F0F0"),border:"none",borderRadius:"50%",width:32,height:32,cursor:"pointer",fontSize:16}}>×</button>
 </div>
 <p style={{fontSize:12,color:GRAY,marginBottom:16}}>{t.incomeModal.sourceFor}
 <strong>{t.months[month]}
@@ -1642,7 +1651,7 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 <input type="text" placeholder={t.incomeModal.sourcePh} value={incomeForm.source} onChange={e=>setIncomeForm(p=>({...p,source:e.target.value}))}/>
 <div style={{marginTop:10}}> <p style={{fontSize:10,fontWeight:600,color:GRAY,textTransform:"uppercase",letterSpacing:".07em",marginBottom:7}}>{t.incomeModal.quickLabel}</p>
 <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-{t.incomeQuickPicks.map(q=>( <button key={q.label} onClick={()=>{haptic.select();setIncomeForm(p=>({...p,source:q.label}));}} style={{ background: incomeForm.source===q.label ? BLACK : "#F3F3F3", color: incomeForm.source===q.label ? WHITE : BLACK, border:"none", borderRadius:50, padding:"6px 12px", fontSize:12, fontFamily:"inherit", cursor:"pointer", display:"flex", alignItems:"center", gap:6, transition:"all .15s", fontWeight:500, }}>
+{t.incomeQuickPicks.map(q=>( <button key={q.label} onClick={()=>{haptic.select();setIncomeForm(p=>({...p,source:q.label}));}} style={{ background: incomeForm.source===q.label ? BLACK : (isDark?"rgba(255,255,255,0.1)":(isDark?"rgba(255,255,255,0.1)":"#F3F3F3")), color: incomeForm.source===q.label ? WHITE : BLACK, border:"none", borderRadius:50, padding:"6px 12px", fontSize:12, fontFamily:"inherit", cursor:"pointer", display:"flex", alignItems:"center", gap:6, transition:"all .15s", fontWeight:500, }}>
 {chipIcon(q.ik, incomeForm.source===q.label)}{q.label}
 </button> ))}
 </div>
@@ -1655,7 +1664,7 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 {showFixedExpModal && ( <div className="overlay" onClick={e=>e.target===e.currentTarget&&setShowFixedExpModal(false)}> <div className="sheet"> <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}> <div> <p style={{fontFamily:"DM Sans",fontSize:20,fontWeight:700}}>{t.transactions.fixedModal}</p>
 <p style={{fontSize:12,color:GRAY,marginTop:3}}>{t.transactions.fixedSub}</p>
 </div>
-<button onClick={()=>setShowFixedExpModal(false)} style={{background:"#F0F0F0",border:"none",borderRadius:"50%",width:32,height:32,cursor:"pointer",fontSize:16}}>×</button>
+<button onClick={()=>setShowFixedExpModal(false)} style={{background:(isDark?"rgba(255,255,255,0.08)":"#F0F0F0"),border:"none",borderRadius:"50%",width:32,height:32,cursor:"pointer",fontSize:16}}>×</button>
 </div>
 <div style={{marginBottom:16}}> <p style={{fontSize:10,fontWeight:600,color:GRAY,textTransform:"uppercase",letterSpacing:".07em",marginBottom:8}}>{lang==="nl"?"Snelkeuze":"Quick pick"}</p>
 <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
@@ -1681,12 +1690,12 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 {label:"Phone", ik:"phone", cat:"Utilities"}, 
 {label:"Internet", ik:"wifi", cat:"Utilities"}, 
 {label:"Netflix", ik:"film", cat:"Entertainment"}, 
-{label:"Spotify", ik:"music", cat:"Entertainment"}, ]).map(q=>( <button key={q.label} onClick={()=>{haptic.select();setFixedExpForm(p=>({...p,desc:q.label,category:q.cat}));}} style={{ background: fixedExpForm.desc===q.label ? BLACK : "#F3F3F3", color: fixedExpForm.desc===q.label ? WHITE : BLACK, border:"none", borderRadius:50, padding:"6px 12px", fontSize:12, fontFamily:"inherit", cursor:"pointer", display:"flex", alignItems:"center", gap:6, transition:"all .15s", fontWeight:500, }}>
+{label:"Spotify", ik:"music", cat:"Entertainment"}, ]).map(q=>( <button key={q.label} onClick={()=>{haptic.select();setFixedExpForm(p=>({...p,desc:q.label,category:q.cat}));}} style={{ background: fixedExpForm.desc===q.label ? BLACK : (isDark?"rgba(255,255,255,0.1)":(isDark?"rgba(255,255,255,0.1)":"#F3F3F3")), color: fixedExpForm.desc===q.label ? WHITE : BLACK, border:"none", borderRadius:50, padding:"6px 12px", fontSize:12, fontFamily:"inherit", cursor:"pointer", display:"flex", alignItems:"center", gap:6, transition:"all .15s", fontWeight:500, }}>
 {chipIcon(q.ik, fixedExpForm.desc===q.label)}{q.label}
 </button> ))}
 </div>
 </div>
-<div style={{height:1,background:"#F0F0F0",marginBottom:16}}/>
+<div style={{height:1,background:(isDark?"rgba(255,255,255,0.08)":"#F0F0F0"),marginBottom:16}}/>
 <div style={{marginBottom:13}}> <label style={{fontSize:11,fontWeight:600,color:GRAY,textTransform:"uppercase",letterSpacing:".07em",display:"block",marginBottom:5}}>{t.transactions.fixedNameLbl}</label>
 <input type="text" placeholder={t.transactions.fixedNamePh} value={fixedExpForm.desc} onChange={e=>setFixedExpForm(p=>({...p,desc:e.target.value}))}/>
 </div>
@@ -1703,7 +1712,7 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 <button className="pill pill-dark" style={{width:"100%",padding:"14px",fontSize:14}} onClick={addFixedExp}>{t.transactions.fixedSaveBtn}</button>
 </div> </div> )}
 {showCatModal && ( <div className="overlay" onClick={e=>e.target===e.currentTarget&&setShowCatModal(false)}> <div className="sheet"> <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}> <p style={{fontFamily:"DM Sans",fontSize:20,fontWeight:700}}>{t.budget.addCatTitle}</p>
-<button onClick={()=>setShowCatModal(false)} style={{background:"#F0F0F0",border:"none",borderRadius:"50%",width:32,height:32,cursor:"pointer",fontSize:16}}>×</button>
+<button onClick={()=>setShowCatModal(false)} style={{background:(isDark?"rgba(255,255,255,0.08)":"#F0F0F0"),border:"none",borderRadius:"50%",width:32,height:32,cursor:"pointer",fontSize:16}}>×</button>
 </div>
 <div style={{marginBottom:16}}> <label style={{fontSize:11,fontWeight:600,color:GRAY,textTransform:"uppercase",letterSpacing:".07em",display:"block",marginBottom:6}}>{t.budget.addCatNameLbl}</label>
 <input type="text" placeholder={t.budget.addCatNamePh} value={catForm.name} onChange={e=>setCatForm(p=>({...p,name:e.target.value}))}/>
@@ -1715,12 +1724,12 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 </div>
 <div style={{marginBottom:22}}> <label style={{fontSize:11,fontWeight:600,color:GRAY,textTransform:"uppercase",letterSpacing:".07em",display:"block",marginBottom:8}}>{t.budget.addCatIcon}</label>
 <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-{Object.keys(ICONS).map(key=>( <button key={key} onClick={()=>setCatForm(p=>({...p,iconKey:key}))} style={{width:38,height:38,borderRadius:10, background:catForm.iconKey===key?BLACK:"#F3F3F3", border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center", color:catForm.iconKey===key?WHITE:BLACK,transition:"all .15s"}}>
+{Object.keys(ICONS).map(key=>( <button key={key} onClick={()=>setCatForm(p=>({...p,iconKey:key}))} style={{width:38,height:38,borderRadius:10, background:catForm.iconKey===key?BLACK:(isDark?"rgba(255,255,255,0.1)":"#F3F3F3"), border:"none",cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center", color:catForm.iconKey===key?WHITE:BLACK,transition:"all .15s"}}>
 {ICONS[key](catForm.iconKey===key?WHITE:catForm.color)}
 </button> ))}
 </div>
 </div>
-{catForm.name && ( <div style={{display:"flex",alignItems:"center",gap:10,background:"#F7F7F7",borderRadius:12,padding:"12px 14px",marginBottom:18}}> <CatDot cat={{iconKey:catForm.iconKey,color:catForm.color}}/>
+{catForm.name && ( <div style={{display:"flex",alignItems:"center",gap:10,background:(isDark?"rgba(255,255,255,0.08)":"#F7F7F7"),borderRadius:12,padding:"12px 14px",marginBottom:18}}> <CatDot cat={{iconKey:catForm.iconKey,color:catForm.color}}/>
 <p style={{fontSize:14,fontWeight:600}}>{catForm.name}</p>
 </div> )}
 <button className="pill pill-yellow" style={{width:"100%",padding:"14px",fontSize:14}} onClick={addCustomCat}>{t.budget.addCatSave}</button>
@@ -1823,13 +1832,13 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 {showFixedModal && ( <div className="overlay" onClick={e=>e.target===e.currentTarget&&setShowFixedModal(false)}> <div className="sheet"> <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:20}}> <div> <p style={{fontFamily:"DM Sans",fontSize:20,fontWeight:700}}>{t.income.fixedModal}</p>
 <p style={{fontSize:12,color:GRAY,marginTop:3}}>{t.income.fixedSub}</p>
 </div>
-<button onClick={()=>setShowFixedModal(false)} style={{background:"#F0F0F0",border:"none",borderRadius:"50%",width:32,height:32,cursor:"pointer",fontSize:16}}>×</button>
+<button onClick={()=>setShowFixedModal(false)} style={{background:(isDark?"rgba(255,255,255,0.08)":"#F0F0F0"),border:"none",borderRadius:"50%",width:32,height:32,cursor:"pointer",fontSize:16}}>×</button>
 </div>
 <div style={{marginBottom:14}}> <label style={{fontSize:11,fontWeight:600,color:GRAY,textTransform:"uppercase",letterSpacing:".07em",display:"block",marginBottom:5}}>{t.income.fixedNameLbl}</label>
 <input type="text" placeholder={t.income.fixedNamePh} value={fixedForm.source} onChange={e=>setFixedForm(p=>({...p,source:e.target.value}))}/>
 <div style={{marginTop:10}}> <p style={{fontSize:10,fontWeight:600,color:GRAY,textTransform:"uppercase",letterSpacing:".07em",marginBottom:7}}>{t.income.fixedQuickLabel}</p>
 <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-{t.fixedIncomeQuickPicks.map(q=>( <button key={q.label} onClick={()=>{haptic.select();setFixedForm(p=>({...p,source:q.label}));}} style={{ background: fixedForm.source===q.label ? BLACK : "#F3F3F3", color: fixedForm.source===q.label ? WHITE : BLACK, border:"none", borderRadius:50, padding:"6px 12px", fontSize:12, fontFamily:"inherit", cursor:"pointer", display:"flex", alignItems:"center", gap:6, transition:"all .15s", fontWeight:500, }}>
+{t.fixedIncomeQuickPicks.map(q=>( <button key={q.label} onClick={()=>{haptic.select();setFixedForm(p=>({...p,source:q.label}));}} style={{ background: fixedForm.source===q.label ? BLACK : (isDark?"rgba(255,255,255,0.1)":(isDark?"rgba(255,255,255,0.1)":"#F3F3F3")), color: fixedForm.source===q.label ? WHITE : BLACK, border:"none", borderRadius:50, padding:"6px 12px", fontSize:12, fontFamily:"inherit", cursor:"pointer", display:"flex", alignItems:"center", gap:6, transition:"all .15s", fontWeight:500, }}>
 {chipIcon(q.ik, fixedForm.source===q.label)}{q.label}
 </button> ))}
 </div>
@@ -1966,11 +1975,11 @@ function TxRow({ t, fmt, cats, editingTx, editTxDesc, editTxAmount, setEditTxDes
           <CatDot cat={cat} />
           <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 6 }}>
             <input ref={txEditRef}
-              style={{ background: "#F7F7F7", border: "1.5px solid #F9C22E", borderRadius: 8, padding: "6px 10px", fontFamily: "inherit", fontSize: 13, fontWeight: 600, width: "100%", outline: "none" }}
+              style={{ background: (isDark?"rgba(255,255,255,0.08)":"#F7F7F7"), border: "1.5px solid #F9C22E", borderRadius: 8, padding: "6px 10px", fontFamily: "inherit", fontSize: 13, fontWeight: 600, width: "100%", outline: "none" }}
               type="text" value={editTxDesc} onChange={e => setEditTxDesc(e.target.value)} />
             <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
               <span style={{ fontSize: 12, color: GRAY }}>€</span>
-              <input style={{ background: "#F7F7F7", border: "1.5px solid #F9C22E", borderRadius: 8, padding: "6px 10px", fontFamily: "inherit", fontSize: 13, fontWeight: 600, flex: 1, outline: "none" }}
+              <input style={{ background: (isDark?"rgba(255,255,255,0.08)":"#F7F7F7"), border: "1.5px solid #F9C22E", borderRadius: 8, padding: "6px 10px", fontFamily: "inherit", fontSize: 13, fontWeight: 600, flex: 1, outline: "none" }}
                 type="number" value={editTxAmount} onChange={e => setEditTxAmount(e.target.value)}
                 onKeyDown={e => { if (e.key === "Enter") onSave(t.id); if (e.key === "Escape") onEdit(null); }} />
               <button onClick={() => onSave(t.id)}
