@@ -1495,9 +1495,9 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 </div> ); }} /> ); })()}
 
 {showNumpad && numpadCat && (
-  <div style={{position:"fixed",inset:0,background:isDark?"rgba(0,0,0,0.5)":"rgba(45,47,94,0.4)",backdropFilter:"blur(6px)",WebkitBackdropFilter:"blur(6px)",display:"flex",alignItems:"flex-end",justifyContent:"center",zIndex:300}}
+  <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:isDark?"rgba(0,0,0,0.6)":"rgba(45,47,94,0.5)",backdropFilter:"blur(8px)",WebkitBackdropFilter:"blur(8px)",display:"flex",alignItems:"flex-end",justifyContent:"center",zIndex:9999}}
     onClick={()=>setShowNumpad(false)}>
-    <div style={{background:theme.WHITE,borderRadius:"28px 28px 0 0",padding:"20px 24px max(28px,env(safe-area-inset-bottom))",width:"100%",maxWidth:480,border:`1px solid ${theme.CARD_BORDER}`}}
+    <div style={{background:theme.WHITE,borderRadius:"28px 28px 0 0",padding:"20px 24px max(28px,env(safe-area-inset-bottom))",width:"100%",maxWidth:480,maxHeight:"90dvh",overflowY:"auto",border:`1px solid ${theme.CARD_BORDER}`,boxShadow:"0 -10px 40px rgba(0,0,0,0.2)"}}
       onClick={e=>e.stopPropagation()}>
 
       {/* Header */}
@@ -1619,7 +1619,7 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 </button>
 </div> )}
 </div>
-<div style={{position:"fixed",bottom:0,left:0,right:0,background:isDark?"rgba(30,32,60,0.85)":"rgba(255,255,255,0.7)",backdropFilter:"blur(16px)",WebkitBackdropFilter:"blur(16px)",paddingTop:8,paddingBottom:"max(16px, env(safe-area-inset-bottom))",borderTop:`1px solid ${theme.CARD_BORDER}`,display:"flex",justifyContent:"space-around",zIndex:100}}>
+<div style={{position:"fixed",bottom:0,left:0,right:0,background:isDark?"rgba(30,32,60,0.85)":"rgba(255,255,255,0.7)",backdropFilter:"blur(16px)",WebkitBackdropFilter:"blur(16px)",paddingTop:8,paddingBottom:"max(16px, env(safe-area-inset-bottom))",borderTop:`1px solid ${theme.CARD_BORDER}`,display:showNumpad?"none":"flex",justifyContent:"space-around",zIndex:100}}>
 {navTabs.map(item=>{ const active = tab===item.id; return ( <button key={item.id} onClick={()=>{haptic.select();setTab(item.id);}} style={{background:"none",border:"none",cursor:"pointer",display:"flex",flexDirection:"column",alignItems:"center",gap:3,fontFamily:"inherit",padding:"0 12px"}}>
 {NAV_ICONS[item.id](active, isDark)}
 <span style={{fontSize:10,fontWeight:700,color:active?BLACK:(isDark?"#9D9DB0":"#6B6B7A"),textTransform:"uppercase",letterSpacing:".06em"}}>{item.label}</span>
