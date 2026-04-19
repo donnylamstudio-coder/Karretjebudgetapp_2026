@@ -1072,33 +1072,33 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 .icon-btn:hover{background:#F0F0F0;}
 .inline-input{background:${YELLOW}22;border:2px solid ${YELLOW};color:${BLACK};border-radius:10px;padding:5px 10px;font-family:inherit;font-size:14px;font-weight:700;width:100px;outline:none;text-align:right;}
 .save-btn{background:${BLACK};color:${WHITE};border:none;border-radius:8px;padding:6px 12px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;margin-left:6px;flex-shrink:0;}
-.nav-arrow{background:rgba(92,102,144,0.2);border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:${BLACK};flex-shrink:0;transition:background .15s;}
-.nav-arrow:hover{background:rgba(92,102,144,0.35);}
-.income-row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid #F5F5F5;}
+.nav-arrow{background:${isDark?"rgba(255,255,255,0.12)":"rgba(92,102,144,0.2)"};border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;color:${BLACK};flex-shrink:0;transition:background .15s;}
+.nav-arrow:hover{background:${isDark?"rgba(255,255,255,0.2)":"rgba(92,102,144,0.35)"};}
+.income-row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid ${theme.DIVIDER};}
 .income-row:last-child{border-bottom:none;}
-.view-toggle{display:flex;background:rgba(92,102,144,0.2);border-radius:50px;padding:3px;gap:2px;}
+.view-toggle{display:flex;background:${isDark?"rgba(255,255,255,0.12)":"rgba(92,102,144,0.2)"};border-radius:50px;padding:3px;gap:2px;}
 .vt-btn{border:none;border-radius:50px;padding:5px 14px;font-family:inherit;font-size:11px;font-weight:700;cursor:pointer;transition:all .18s;text-transform:uppercase;letter-spacing:.05em;}
-.vt-btn.active{background:#5C6690;color:${WHITE};}
-.vt-btn.inactive{background:transparent;color:rgba(0,0,0,.5);}
-.month-chip{background:rgba(255,255,255,.15);border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer;transition:all .18s;}
-.month-chip:hover{background:rgba(255,255,255,.25);}
-.month-chip.active{background:${WHITE};box-shadow:0 2px 8px rgba(0,0,0,.1);}
-.lang-toggle{display:flex;background:rgba(92,102,144,0.2);border-radius:50px;padding:2px;gap:1px;}
+.vt-btn.active{background:${isDark?"#7B85B8":"#5C6690"};color:${isDark?"#2D2F5E":WHITE};}
+.vt-btn.inactive{background:transparent;color:${isDark?"rgba(240,241,248,0.55)":"rgba(0,0,0,.5)"};}
+.month-chip{background:${isDark?"rgba(255,255,255,.08)":"rgba(255,255,255,.15)"};border-radius:10px;padding:8px 4px;text-align:center;cursor:pointer;transition:all .18s;}
+.month-chip:hover{background:${isDark?"rgba(255,255,255,.14)":"rgba(255,255,255,.25)"};}
+.month-chip.active{background:${isDark?"rgba(255,255,255,.18)":WHITE};box-shadow:0 2px 8px rgba(0,0,0,.1);}
+.lang-toggle{display:flex;background:${isDark?"rgba(255,255,255,0.12)":"rgba(92,102,144,0.2)"};border-radius:50px;padding:2px;gap:1px;}
 .lt-btn{border:none;border-radius:50px;padding:4px 10px;font-family:inherit;font-size:11px;font-weight:700;cursor:pointer;transition:all .18s;letter-spacing:.03em;}
-.lt-btn.active{background:rgba(255,255,255,0.9);color:#3A4070;}
-.lt-btn.inactive{background:transparent;color:rgba(0,0,0,.45);}
+.lt-btn.active{background:${isDark?"rgba(240,241,248,0.9)":"rgba(255,255,255,0.9)"};color:#3A4070;}
+.lt-btn.inactive{background:transparent;color:${isDark?"rgba(240,241,248,0.5)":"rgba(0,0,0,.45)"};}
 ::-webkit-scrollbar{width:4px;}
 ::-webkit-scrollbar-thumb{background:#DDD;border-radius:2px;} `}
 </style>
 <div style={{flexShrink:0,display:showNumpad?"none":"block"}}>
-<div style={{background:"#BCC3DD",padding:"10px 16px 16px",borderRadius:"0 0 28px 28px"}}>
+<div style={{background:isDark?"#252842":"#BCC3DD",padding:"10px 16px 16px",borderRadius:"0 0 28px 28px",transition:"background 0.3s"}}>
 <div style={{textAlign:"center",marginBottom:6}}>
   <p style={{fontFamily:"DM Sans",fontSize:20,fontWeight:800,color:BLACK,letterSpacing:"-0.5px",lineHeight:1}}>karretje</p>
 </div>
 <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}> <div style={{display:"flex",gap:6,alignItems:"center"}}> <div className="lang-toggle"> <button className={`lt-btn ${lang==="nl"?"active":"inactive"}`} onClick={()=>switchLang("nl")}>NL</button>
 <button className={`lt-btn ${lang==="en"?"active":"inactive"}`} onClick={()=>switchLang("en")}>EN</button>
 </div>
-<button onClick={()=>{haptic.select();setShowSettings(true);}} style={{background:"rgba(255,255,255,0.25)",border:"none",borderRadius:"50%",width:32,height:32,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,marginLeft:4}}>
+<button onClick={()=>{haptic.select();setShowSettings(true);}} style={{background:isDark?"rgba(255,255,255,0.08)":"rgba(255,255,255,0.25)",border:"none",borderRadius:"50%",width:32,height:32,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",padding:0,marginLeft:4}}>
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={BLACK} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="3"/>
     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
@@ -1113,14 +1113,14 @@ input:focus,select:focus{border-color:${YELLOW};background:${WHITE};}
 <h2 style={{fontFamily:"DM Sans",fontSize:22,fontWeight:800,textAlign:"center",minWidth:120}}>{periodLabel}</h2>
 <button className="nav-arrow" onClick={()=>{haptic.light();nextPeriod();}}>›</button>
 </div>
-<div style={{background:BLACK,borderRadius:16,padding:"12px 16px",color:WHITE}}> <p style={{fontSize:11,color:"rgba(255,255,255,.65)",textTransform:"uppercase",letterSpacing:".05em",marginBottom:4}}>
+<div style={{background:isDark?"#3A3D6B":"#2D2F5E",borderRadius:16,padding:"12px 16px",color:"#FFFFFF"}}> <p style={{fontSize:11,color:"rgba(255,255,255,.65)",textTransform:"uppercase",letterSpacing:".05em",marginBottom:4}}>
 {viewMode==="month" ? t.balance.thisMonth : `${t.balance.yearBalance} ${year}`}
 </p>
 <p style={{fontFamily:"DM Sans",fontSize:28,fontWeight:800,lineHeight:1,marginBottom:10,color:curBalance>=0?"#2ECC71":"#FF6B6B"}}>
 {fmt(curBalance)}
 </p>
 <div style={{display:"flex",gap:10}}>
-{[{label:t.balance.income,val:curIncome,color:YELLOW},
+{[{label:t.balance.income,val:curIncome,color:"#9DA8DD"},
 {label:t.balance.expenses,val:curExpenses,color:"#FF8A65"}].map(s=>( <div key={s.label} style={{flex:1,background:"rgba(255,255,255,.08)",borderRadius:10,padding:"8px 12px"}}> <p style={{fontSize:9,color:"rgba(255,255,255,.65)",textTransform:"uppercase",letterSpacing:".06em",marginBottom:2}}>{s.label}</p>
 <p style={{fontSize:15,fontWeight:700,color:s.color}}>{fmt(s.val)}</p>
 </div> ))}
