@@ -161,7 +161,7 @@ const T = {
       {label:"Netflix", ik:"play", cat:"Vrije tijd"},
       {label:"Spotify", ik:"music", cat:"Vrije tijd"},
       {label:"Benzine", ik:"fuel", cat:"Brandstof"},
-      {label:"OV", ik:"train", cat:"Brandstof"},
+      {label:"OV", ik:"train", cat:"Transport"},
       {label:"Apotheek", ik:"pill", cat:"Gezondheid"},
       {label:"Vakantie", ik:"home2", cat:"Vakantie"},
     ],
@@ -174,7 +174,7 @@ const T = {
       {label:"Salaris", ik:"wallet"},
       {label:"Freelance", ik:"laptop"},
       {label:"Bonus", ik:"star"},
-      {label:"Huur inkomst", ik:"home2"},
+      {label:"Huurinkomsten", ik:"home2"},
       {label:"Dividend", ik:"trending"},
       {label:"Bijbaan", ik:"briefcase"},
       {label:"Verkoop", ik:"tag"},
@@ -250,7 +250,7 @@ const T = {
       {label:"Netflix", ik:"play", cat:"Leisure"},
       {label:"Spotify", ik:"music", cat:"Leisure"},
       {label:"Fuel", ik:"fuel", cat:"Fuel"},
-      {label:"Public transport", ik:"train", cat:"Fuel"},
+      {label:"Public transport", ik:"train", cat:"Transport"},
       {label:"Pharmacy", ik:"pill", cat:"Health"},
       {label:"Holiday", ik:"home2", cat:"Holiday"},
     ],
@@ -1051,7 +1051,10 @@ export default function App() {
 
 return ( <div
 style={{height:"100dvh",background:theme.APP_BG,fontFamily:"DM Sans",color:BLACK,display:"flex",flexDirection:"column",overflow:"hidden",transition:"background 0.3s"}}> 
-<style>{` @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap'); *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+<style>{` @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap'); *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;}
+input,textarea{-webkit-user-select:text;user-select:text;}
+html{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+body{touch-action:manipulation;overscroll-behavior:none;}
 html,body{height:100%;overflow:hidden;}
 .card{background:${theme.CARD_BG};backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:20px;padding:16px;box-shadow:0 4px 20px ${isDark?'rgba(0,0,0,0.3)':'rgba(45,47,94,0.1)'};border:1px solid ${theme.CARD_BORDER};transition:background 0.3s, border-color 0.3s;}
 .pill{border:none;border-radius:50px;padding:10px 22px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:all .18s;}
