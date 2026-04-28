@@ -13,7 +13,7 @@ try {
 } catch(e) {}
 const store = {
   get: async (key) => {
-    try { 
+    try {
       if (Preferences) {
         const { value } = await Preferences.get({ key });
         return value ? JSON.parse(value) : null;
